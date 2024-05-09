@@ -1464,6 +1464,11 @@
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.5.tgz#db9468cb1b1b5a925b8f34822f1669df0c5472f5"
   integrity sha512-hWtVTC2q7hc7xZ/RLbxapMvDMgUnDvKvMOpKal4DrMyfGBUfB1oKaZlIRr6mJL+If3bAP6sV/QneGzF6tJjZDg==
 
+"@types/color-namer@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@types/color-namer/-/color-namer-1.3.3.tgz#516579f13c556fcc112514ccdd71f6cea2085dbd"
+  integrity sha512-DJ0MHHqazwb94dUBRhahK49nXhRGk2DIRNrVNVR3U3uQjYWY4uNhEjHXO+TbFQGpZcwli1pCj6xm3S3KsB/+3A==
+
 "@types/glob@^7.1.1":
   version "7.2.0"
   resolved "https://registry.npmjs.org/@types/glob/-/glob-7.2.0.tgz"
@@ -1778,7 +1783,7 @@ aws-sdk@^2.1404.0:
     uuid "8.0.0"
     xml2js "0.6.2"
 
-axios@^1.4.0, axios@^1.6.2:
+axios@^1.6.2:
   version "1.6.8"
   resolved "https://registry.npmjs.org/axios/-/axios-1.6.8.tgz"
   integrity sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==
@@ -2033,6 +2038,11 @@ chownr@^2.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
+chroma-js@^1.3.4:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-1.4.1.tgz#eb2d9c4d1ff24616be84b35119f4d26f8205f134"
+  integrity sha512-jTwQiT859RTFN/vIf7s+Vl/Z2LcMrvMv3WUFmd/4u76AdlFC0NTNgqEEFPcRiHmAswPsMiQEDZLM8vX8qXpZNQ==
+
 ci-info@^3.8.0:
   version "3.9.0"
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-3.9.0.tgz"
@@ -2138,6 +2148,14 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+color-namer@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/color-namer/-/color-namer-1.4.0.tgz#5290cb0e1618d6066c4a3591fb9d270a0cc70d35"
+  integrity sha512-3mQMY9MJyfdV2uhe+xjQWcKHtYnPtl5svGjt89V2WWT2MlaLAd7C02886Wq7H1MTjjIIEa/NJLYPNF/Lhxhq2A==
+  dependencies:
+    chroma-js "^1.3.4"
+    es6-weak-map "^2.0.3"
 
 combined-stream@^1.0.6, combined-stream@^1.0.8:
   version "1.0.8"
@@ -2969,7 +2987,7 @@ functions-have-names@^1.2.3:
   resolved "https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-gaxios@^6.0.0, gaxios@^6.1.1:
+gaxios@^6.0.0, gaxios@^6.0.3, gaxios@^6.1.1:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/gaxios/-/gaxios-6.5.0.tgz#21bc20e24f21189ce8907079b56205ff9fd2c0d7"
   integrity sha512-R9QGdv8j4/dlNoQbX3hSaK/S0rkMijqjVvW3YM06CoBdbU/VdKd159j4hePpng0KuE6Lh6JJ7UdmVGJZFcAG1w==
@@ -3095,7 +3113,7 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-google-auth-library@^9.3.0, google-auth-library@^9.9.0:
+google-auth-library@^9.0.0, google-auth-library@^9.3.0, google-auth-library@^9.7.0:
   version "9.9.0"
   resolved "https://registry.yarnpkg.com/google-auth-library/-/google-auth-library-9.9.0.tgz#71488ef444335ff4ea91611729b88c0f57625fdf"
   integrity sha512-9l+zO07h1tDJdIHN74SpnWIlNR+OuOemXlWJlLP9pXy6vFtizgpEzMuwJa4lqY9UAdiAv5DVd5ql0Am916I+aA==
@@ -3125,13 +3143,25 @@ google-gax@^4.0.3:
     retry-request "^7.0.0"
     uuid "^9.0.1"
 
-google-spreadsheet@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/google-spreadsheet/-/google-spreadsheet-4.1.1.tgz#56c422c86b51a2ea9dad21c40cd69bccbd58591f"
-  integrity sha512-Npk/xAMTgxEt/m/X9EXIqdY6CEYGiqUHrSuiLnNSKli5H+wiOQLSLsnfMxcdNPH6aSh6GttZm6QJhrnsxjwpZQ==
+googleapis-common@^7.0.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/googleapis-common/-/googleapis-common-7.2.0.tgz#5c19102c9af1e5d27560be5e69ee2ccf68755d42"
+  integrity sha512-/fhDZEJZvOV3X5jmD+fKxMqma5q2Q9nZNSF3kn1F18tpxmA86BcTxAGBQdM0N89Z3bEaIs+HVznSmFJEAmMTjA==
   dependencies:
-    axios "^1.4.0"
-    lodash "^4.17.21"
+    extend "^3.0.2"
+    gaxios "^6.0.3"
+    google-auth-library "^9.7.0"
+    qs "^6.7.0"
+    url-template "^2.0.8"
+    uuid "^9.0.0"
+
+googleapis@^137.1.0:
+  version "137.1.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-137.1.0.tgz#f7896e6676e6e5ca358741bd7e837d8dfce94e96"
+  integrity sha512-2L7SzN0FLHyQtFmyIxrcXhgust77067pkkduqkbIpDuj9JzVnByxsRrcRfUMFQam3rQkWW2B0f1i40IwKDWIVQ==
+  dependencies:
+    google-auth-library "^9.0.0"
+    googleapis-common "^7.0.0"
 
 gopd@^1.0.1:
   version "1.0.1"
@@ -4366,7 +4396,7 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-qs@^6.10.3, qs@^6.11.0:
+qs@^6.10.3, qs@^6.11.0, qs@^6.7.0:
   version "6.12.1"
   resolved "https://registry.npmjs.org/qs/-/qs-6.12.1.tgz"
   integrity sha512-zWmv4RSuB9r2mYQw3zxQuHWeU+42aKi1wWig/j4ele4ygELZ7PEO6MM7rim9oAQH2A5MWfsAVf/jPvTPgCbvUQ==
@@ -5247,6 +5277,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+url-template@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/url-template/-/url-template-2.0.8.tgz#fc565a3cccbff7730c775f5641f9555791439f21"
+  integrity sha512-XdVKMF4SJ0nP/O7XIPB0JwAEuT9lDIYnNsK8yGVe43y0AWoKeJNdv3ZNWh7ksJ6KqQFjOO6ox/VEitLnaVNufw==
 
 url@0.10.3:
   version "0.10.3"

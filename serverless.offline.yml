@@ -18,9 +18,10 @@ provider:
   runtime: nodejs20.x
 
 functions:
-  SheetsFunction:
-    handler: ./src/functions/sheets.handler
+  IaFunction:
+    timeout: 900
+    handler: ./src/functions/ia.handler
     events:
       - http:
-          path: poc
+          path: ia
           method: GET
