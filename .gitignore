@@ -1,0 +1,7 @@
+.env
+.build
+.dist
+data
+node_modules
+.serverless
+src/google-keys.ts

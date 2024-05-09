@@ -1,0 +1,169 @@
+Resources:
+  ServerlessBuild:
+    Type: "AWS::CodeBuild::Project"
+    Properties:
+      Name: ${self:custom.serviceNamePrefix}-api-build
+      ServiceRole: !GetAtt ServerlessBuildRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+        Name: ${self:custom.serviceNamePrefix}
+      Environment:
+        ComputeType: BUILD_GENERAL1_LARGE
+        Type: LINUX_CONTAINER
+        Image: "aws/codebuild/standard:7.0"
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: !Sub |
+          version: 0.2
+          phases:
+            install:
+              runtime-versions:
+                nodejs: 20
+              commands:
+              - n 20
+              - npm install -g serverless
+              - serverless plugin install -n serverless-plugin-typescript
+            build:
+              commands:
+              - sls deploy --stage ${sls:stage}
+          artifacts:
+            files:
+              - '**/*'
+  ServerlessBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ${self:custom.serviceNamePrefix}-build-api
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "codebuild.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: /service-role/
+      Policies:
+        - PolicyName: ${self:custom.serviceNamePrefix}-build-api
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "s3:*"
+                Resource:
+                  - Fn::Sub: arn:aws:s3:::oncoclinicas-serverless-artifacts-${sls:stage}
+                  - Fn::Sub: arn:aws:s3:::oncoclinicas-serverless-artifacts-${sls:stage}/*
+              - Effect: Allow
+                Action:
+                  - "cloudformation:ValidateTemplate"
+                Resource:
+                  - "*"
+              - Effect: Allow
+                Action:
+                  - "ecr:GetAuthorizationToken"
+                Resource:
+                  - "*"
+              - Effect: Allow
+                Action:
+                  - "cloudformation:*"
+                Resource:
+                  - Fn::Sub: "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${self:custom.serviceNamePrefix}/*"
+                  - Fn::Sub: "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/${self:custom.serviceNamePrefix}:*"
+              - Effect: Allow
+                Action:
+                  - "logs:*"
+                Resource:
+                  - Fn::Sub: "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*:log-stream:*"
+                  - Fn::Sub: "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:destination:*"
+                  - Fn::Sub: "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+              - Effect: Allow
+                Action:
+                  - "events:DescribeRule"
+                  - "events:EventRule"
+                  - "events:CreateEventBus"
+                Resource:
+                  - "*"
+              - Effect: Allow
+                Action:
+                  - "ssm:GetParameter"
+                Resource:
+                  - ${self:custom.secrets.SECRET_ARN_REFERENCE}
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:GetSecretValue"
+                Resource:
+                  - ${self:custom.secrets.SECRET_ARN}
+              - Effect: Allow
+                Action:
+                  - "iam:GetRole"
+                Resource:
+                  - Fn::Sub: "arn:aws:iam::${AWS::AccountId}:role/*"
+              - Effect: Allow
+                Action:
+                  - "lambda:CreateFunction"
+                  - "lambda:InvokeFunction"
+                  - "lambda:ListVersionsByFunction"
+                  - "lambda:GetFunction"
+                  - "lambda:UpdateFunctionConfiguration"
+                  - "lambda:GetFunctionConfiguration"
+                  - "lambda:UpdateFunctionCode"
+                  - "lambda:ListTags"
+                  - "lambda:DeleteFunction"
+                  - "lambda:PublishVersion"
+                  - "lambda:UpdateFunctionCode"
+                  - "iam:GetRole"
+                  - "iam:PassRole"
+                Resource:
+                  - Fn::Sub: arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:custom.serviceNamePrefix}-MainFunction
+                  - Fn::Sub: "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:custom.serviceNamePrefix}-MainFunction-custom-resource-apigw-cw-role"
+              - Effect: Allow
+                Action:
+                  - "apigateway:DELETE"
+                  - "apigateway:PUT"
+                  - "apigateway:PATCH"
+                  - "apigateway:POST"
+                  - "apigateway:GET"
+                Resource:
+                  - !Join [
+                      "",
+                      [
+                        Fn::Sub: "arn:aws:apigateway:${AWS::Region}::/restapis/",
+                        { "Ref": "ApiGatewayRestApi" },
+                        "/*",
+                      ],
+                    ]
+                  - Fn::Sub: arn:aws:apigateway:${AWS::Region}::/domainnames/${self:custom.serviceNamePrefix}/basepathmappings/*
+                  - arn:aws:apigateway:us-east-1::/domainnames
+              - Effect: Allow
+                Action:
+                  - "apigateway:DELETE"
+                  - "apigateway:GET"
+                Resource:
+                  - Fn::Sub: "arn:aws:apigateway:${AWS::Region}::/restapis"
+                  - Fn::Sub: "arn:aws:apigateway:${AWS::Region}::/restapis/*"
+              - Effect: Allow
+                Action:
+                  - "codebuild:UpdateProject"
+                Resource:
+                  - Fn::Sub: "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:project/${self:custom.serviceNamePrefix}-api-build"
+              - Effect: Allow
+                Action:
+                  - "iam:PassRole"
+                  - "iam:PutRolePolicy"
+                Resource:
+                  - Fn::Sub: "arn:aws:iam::${AWS::AccountId}:role/${self:custom.serviceNamePrefix}"
+              - Effect: Allow
+                Action:
+                  - "ec2:DescribeSecurityGroups"
+                  - "ec2:DescribeSubnets"
+                  - "ec2:DescribeVpcs"
+                  - "ec2:DescribeDhcpOptions"
+                  - "ec2:DescribeNetworkAcls"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:CreateNetworkInterface"
+                  - "ec2:CreateNetworkInterfacePermission"
+                  - "ec2:DeleteNetworkInterface"
+                  - "ec2:AttachNetworkInterface"
+                  - "ec2:DetachNetworkInterface"
+                Resource: "*"

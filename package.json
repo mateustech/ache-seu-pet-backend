@@ -1,0 +1,28 @@
+{
+  "name": "ache-seu-pet",
+  "version": "1.0.0",
+  "description": "",
+  "author": "mateustech686@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sls offline --config serverless.offline.yml",
+    "help": "sls offline --help",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@google-cloud/vision": "^4.2.1",
+    "@types/aws-lambda": "^8.10.137",
+    "google-auth-library": "^9.9.0",
+    "google-spreadsheet": "^4.1.1",
+    "serverless": "^3.38.0",
+    "typescript": "^5.4.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/uuid": "^9.0.8",
+    "serverless-offline": "^13.3.4",
+    "serverless-offline-watcher": "^1.1.0",
+    "serverless-plugin-typescript": "^2.1.5"
+  }
+}
