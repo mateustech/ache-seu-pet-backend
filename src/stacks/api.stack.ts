@@ -25,7 +25,7 @@ export function ApiStack({ stack }: StackContext) {
   ApiGateway.bind([PetTable, PetBucket]);
   ApiGateway.attachPermissions(["dynamodb", "s3"]);
   ApiGateway.addRoutes(stack, {
-    "ANY /{proxy+}": "packages/functions/src/lambda.handler",
+    "ANY /{proxy+}": "packages/lambda/src/not-found.main",
   });
 
   stack.addOutputs({
@@ -33,8 +33,6 @@ export function ApiStack({ stack }: StackContext) {
     ApiCustomEndpoint: ApiGateway.customDomainUrl,
     ApiHttpArn: ApiGateway.httpApiArn,
     ApiStackName: stack.stackName,
-    BucketArn: PetBucket.bucketArn,
-    BucketName: PetBucket.bucketName,
   });
 
   return { ApiGateway };
