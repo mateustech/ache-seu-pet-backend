@@ -1,13 +1,5 @@
 {
-  "eslint.workingDirectories": [{ "mode": "auto" }],
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "git.ignoreLimitWarning": true
+  "search.exclude": {
+    "**/.sst": true
+  }
 }

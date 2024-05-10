@@ -1,7 +1,15 @@
-.env
-.build
-.dist
-data
+# dependencies
 node_modules
-.serverless
-src/google-keys.ts
+
+# sst
+.sst
+.build
+
+# opennext
+.open-next
+
+# misc
+.DS_Store
+
+# local env files
+.env*.local
